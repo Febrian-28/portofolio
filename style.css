@@ -270,3 +270,38 @@ body {
     .hero-meta-data h1 { font-size: 1.8rem; }
     .info-card, .ach-card { flex-direction: column; text-align: center; } /* Ikon dan teks ke bawah */
 }
+
+/* ==========================================================================
+   PERBAIKAN KHUSUS TAMPILAN HP (TENTANG SAYA)
+   ========================================================================== */
+@media (max-width: 992px) {
+    /* Memaksa kolom teks dan foto bertumpuk atas-bawah */
+    .about-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 40px;
+    }
+    
+    /* Memaksa lebar teks dan area foto menjadi 100% layar */
+    .about-text, .about-profile-col {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Memaksa kotak info (Nama, Domisili, dll) menyusun ke bawah */
+    .about-info {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100%;
+        gap: 15px;
+    }
+    
+    /* Menyesuaikan ukuran foto agar pas dan elegan di tengah HP */
+    .about-image-wrapper {
+        width: 200px !important;
+        height: 260px !important;
+        margin: 0 auto 10px auto !important;
+    }
+}
