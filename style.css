@@ -1,0 +1,1157 @@
+/* ==========================================================================
+   RESET & UTILITIES
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --primary: #0B132B;       /* Biru Navy Gelap Deep */
+    --secondary: #1C2541;     /* Biru Slate Kontainer/Kartu */
+    --light-dark: #111A36;    /* Alternatif background selang-seling */
+    --blue-neon: #00E5FF;     /* Biru Neon Hidup (Pengganti Emas) */
+    --blue-hover: #00B4D8;    /* Biru Hover */
+    --white: #FFFFFF;
+    --text-main: #F1F5F9;     
+    --text-muted: #94A3B8;    
+    --shadow-premium: 0 15px 35px rgba(0, 0, 0, 0.5);
+    --border-glow: rgba(0, 229, 255, 0.2);
+    --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif;
+    background-color: var(--primary);
+    color: var(--text-main);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section {
+    padding: 100px 0;
+}
+
+.bg-light-dark {
+    background-color: var(--light-dark);
+}
+
+/* ==========================================================================
+   HEADER & NAVIGATION
+   ========================================================================== */
+.header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(11, 19, 43, 0.85);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: var(--transition);
+}
+
+.header-container-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: 2px;
+}
+
+.logo .dot {
+    color: var(--blue-neon);
+}
+
+.navbar {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+}
+
+.navbar a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    transition: var(--transition);
+    position: relative;
+    padding: 5px 0;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    color: var(--blue-neon);
+}
+
+.navbar a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--blue-neon);
+    transition: var(--transition);
+}
+
+.navbar a:hover::after,
+.navbar a.active::after {
+    width: 100%;
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 24px;
+    color: var(--blue-neon);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+/* ==========================================================================
+   HERO SECTION & 3D LAYOUT STYLING (UPDATED)
+   ========================================================================== */
+/* Induk Hero dikunci dengan gradasi radial biru malam */
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(circle at center, #111A36 0%, #0B132B 100%);
+}
+
+.hero-container-3d {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+/* Teks PORTFOLIO Besar Latar Belakang menggunakan warna biru neon transparan */
+.bg-text-3d {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 11rem;
+    letter-spacing: 12px;
+    color: var(--blue-neon);
+    opacity: 0.12;
+    user-select: none;
+    text-align: center;
+    line-height: 0.8;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Pembungkus foto profil 3D melayang */
+.profile-card-3d-wrapper {
+    position: relative;
+    z-index: 2;
+    width: 300px; /* Disamakan dengan lebar card agar posisi 3D-nya simetris */
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.profile-card-3d {
+    width: 300px;        /* Lebar pasti bingkai kartu */
+    height: 400px;       /* Tinggi pasti bingkai kartu */
+    overflow: hidden;    /* WAJIB: Memotong & menyembunyikan sisa foto yang keluar dari bingkai */
+    border-radius: 15px; /* Sudut bingkai melengkung halus */
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.08); /* Border tipis bawaan */
+    transition: var(--transition);
+}
+
+.profile-card-3d:hover {
+    border-color: var(--blue-neon);
+}
+
+.profile-card-3d img {
+    width: 100%;         /* Memaksa lebar foto memenuhi 100% bingkai */
+    height: 100%;        /* Memaksa tinggi foto memenuhi 100% bingkai */
+    object-fit: cover;   /* WAJIB: Menjaga rasio foto agar TIDAK GEPENG/KERUT */
+    
+    /* Menggeser fokus vertikal ke angka 20% agar wajah naik pas ke tengah frame */
+    object-position: center 100%; 
+    
+    display: block;
+}
+
+.hero-meta-data {
+    text-align: center;
+    margin-top: 30px;
+    z-index: 3;
+}
+
+.hero-meta-data h1 {
+    font-size: 2.8rem;
+    margin-bottom: 5px;
+    color: var(--white);
+    font-weight: 800;
+}
+
+.typing-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    height: 36px;
+}
+
+.typing-text-prefix {
+    color: var(--text-muted);
+    font-size: 18px;
+}
+
+.hero-description {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+}
+/* Utilities Tombol Utama & Sekunder */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    padding: 16px 34px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 15px;
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background: var(--blue-neon);
+    color: var(--primary);
+    box-shadow: 0 4px 20px rgba(0, 229, 255, 0.25);
+}
+
+.btn-primary:hover {
+    background: var(--blue-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px rgba(0, 229, 255, 0.4);
+}
+
+.btn-secondary {
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--blue-neon);
+    color: var(--blue-neon);
+    transform: translateY(-3px);
+}
+
+/* Container Induk Kolom Kanan */
+.about-profile-col {
+    display: flex;
+    flex-direction: column; /* Menyusun konten (foto lalu info) ke bawah */
+    align-items: center;    /* INI KUNCINYA: Membuat foto dan semua info rata tengah secara horizontal */
+    width: 100%;            /* Memenuhi lebar kolom yang tersedia */
+    gap: 30px;              /* Memberi jarak antara foto dan grup tombol info di bawahnya */
+}
+
+
+/* Memastikan foto memenuhi wrapper dan wajahnya pas di tengah */
+.about-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;      /* Memotong foto agar pas tanpa gepeng */
+    object-position: center 20%; /* Menggeser sedikit ke atas agar wajah Riswan di tengah */
+    display: block;
+}
+
+/* Grup Kotak Info di Bawah Foto */
+.about-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Membuat tumpukan kotak info 2x2 */
+    gap: 15px;              /* Jarak antar kotak info */
+    width: 100%;            /* Mengikuti lebar container induk */
+    max-width: 600px;       /* Batas lebar grup info agar tidak terlalu melar */
+}
+
+/* Styling Kotak Info (Gaya yang Anda gunakan) */
+.info-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: rgba(28, 37, 65, 0.45); /* Contoh background glassmorphism */
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* CSS Responsif untuk HP */
+@media (max-width: 768px) {
+    .about-image-wrapper {
+        width: 250px;       /* Foto mengecil sedikit di HP */
+        height: 330px;
+    }
+    
+    .about-info {
+        grid-template-columns: 1fr; /* Di HP kotak info berjejer 1 kolom ke bawah */
+    }
+}
+
+/* ==========================================================================
+   SECTION HEADER GENERAL
+   ========================================================================== */
+.section-title {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title span {
+    color: var(--blue-neon);
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 3px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.section-title h2 {
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.title-line {
+    width: 60px;
+    height: 3px;
+    background-color: var(--blue-neon);
+    margin: 15px auto 0 auto;
+    border-radius: 2px;
+}
+
+/* ==========================================================================
+   ABOUT SECTION
+   ========================================================================== */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.about-text p {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 24px;
+}
+
+.about-text strong {
+    color: var(--white);
+}
+
+.quote-box {
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 3px solid var(--blue-neon);
+    padding: 20px 24px;
+    border-radius: 0 16px 16px 0;
+    margin-top: 30px;
+}
+
+.quote-icon {
+    color: var(--blue-neon);
+    font-size: 20px;
+    margin-bottom: 10px;
+    opacity: 0.7;
+}
+
+.about-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.info-card {
+    background: var(--secondary);
+    padding: 24px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: var(--transition);
+}
+
+.info-card:hover {
+    border-color: var(--border-glow);
+    transform: translateY(-3px);
+}
+
+.info-icon-box {
+    width: 48px;
+    height: 48px;
+    background: rgba(0, 229, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--blue-neon);
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.info-details h4 {
+    color: var(--text-muted);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.info-details p {
+    color: var(--white);
+    font-weight: 600;
+    font-size: 15px;
+}
+
+/* ==========================================================================
+   STATISTICS SECTION
+   ========================================================================== */
+.statistics {
+    padding: 60px 0;
+    background: linear-gradient(180deg, var(--primary) 0%, var(--light-dark) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.stats-card {
+    background: rgba(28, 37, 65, 0.4);
+    padding: 30px 20px;
+    text-align: center;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    transition: var(--transition);
+}
+
+.stats-card:hover {
+    background: rgba(28, 37, 65, 0.7);
+    transform: translateY(-5px);
+    border-color: var(--border-glow);
+}
+
+.stats-icon {
+    font-size: 26px;
+    color: var(--blue-neon);
+    margin-bottom: 12px;
+}
+
+.stats-card h3 {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 6px;
+}
+
+.stats-card p {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   KOMPETENSI / SKILLS SECTION
+   ========================================================================== */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 24px;
+}
+
+.skill-card {
+    background: var(--secondary);
+    padding: 34px 28px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: var(--transition);
+}
+
+.skill-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(0, 229, 255, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.skill-icon-wrapper {
+    width: 54px;
+    height: 54px;
+    background: rgba(0, 229, 255, 0.08);
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--blue-neon);
+    font-size: 22px;
+    margin-bottom: 22px;
+    transition: var(--transition);
+}
+
+.skill-card:hover .skill-icon-wrapper {
+    background: var(--blue-neon);
+    color: var(--primary);
+}
+
+.skill-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 12px;
+}
+
+.skill-card p {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   TIMELINE PENGALAMAN (ALA LINKEDIN GAYA VERTIKAL TENGAH)
+   ========================================================================== */
+.linkedin-timeline {
+    position: relative;
+    padding: 20px 0;
+    margin-top: 30px;
+}
+
+.linkedin-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--blue-neon), transparent);
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.timeline-item:nth-child(even) {
+    justify-content: flex-start;
+}
+
+.timeline-badge {
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    background: var(--secondary);
+    border: 2px solid var(--blue-neon);
+    color: var(--blue-neon);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    font-size: 16px;
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+}
+
+.timeline-panel {
+    width: 44%;
+    padding: 25px;
+    border-radius: 12px;
+    position: relative;
+    background: var(--secondary);
+}
+
+.timeline-date {
+    display: inline-block;
+    color: var(--blue-neon);
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.timeline-heading h3 {
+    font-size: 20px;
+    color: var(--white);
+    margin-bottom: 5px;
+}
+
+.timeline-heading h4 {
+    font-size: 15px;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
+.timeline-body p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   EDUCATION SECTION
+   ========================================================================== */
+.education-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.edu-card {
+    background: var(--secondary);
+    padding: 34px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    position: relative;
+    transition: var(--transition);
+}
+
+.edu-card:hover {
+    border-color: var(--border-glow);
+    transform: translateY(-5px);
+}
+
+.edu-badge {
+    position: absolute;
+    top: 34px;
+    right: 34px;
+    color: var(--text-muted);
+    font-size: 18px;
+    opacity: 0.3;
+}
+
+.edu-card h3 {
+    font-size: 22px;
+    color: var(--white);
+    margin-bottom: 6px;
+}
+
+.edu-field {
+    color: var(--blue-neon);
+    font-size: 15px;
+    margin-bottom: 16px;
+}
+
+.edu-meta {
+    display: block;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+.edu-desc {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   NEW VISUAL CERTIFICATIONS (3D GRID CARDS LAYOUT)
+   ========================================================================== */
+.cert-3d-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    width: 100%;
+    margin-top: 40px;
+}
+
+.cert-card-3d {
+    background: rgba(28, 37, 65, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    transform-style: preserve-3d;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s;
+}
+
+.cert-card-3d:hover {
+    box-shadow: 0 30px 50px rgba(0, 229, 255, 0.15);
+}
+
+.cert-card-3d img {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    transform: translateZ(25px);
+}
+
+.cert-card-3d h3 {
+    font-size: 1.2rem;
+    color: var(--white);
+    margin-bottom: 8px;
+    transform: translateZ(15px);
+}
+
+.cert-card-3d p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+    transform: translateZ(10px);
+}
+
+.btn-cert-dl {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--blue-neon);
+    color: var(--primary);
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    transform: translateZ(20px);
+}
+
+.btn-cert-dl:hover {
+    background: var(--white);
+    color: var(--primary);
+    transform: translateZ(20px) scale(1.05);
+}
+
+/* ==========================================================================
+   ACHIEVEMENTS SECTION
+   ========================================================================== */
+.achievement-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.ach-card {
+    background: var(--secondary);
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    display: flex;
+    gap: 24px;
+    transition: var(--transition);
+}
+
+.ach-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    background: rgba(0, 229, 255, 0.1);
+    color: var(--blue-neon);
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.ach-info-text h3 {
+    font-size: 18px;
+    color: var(--white);
+}
+
+.ach-year {
+    color: var(--blue-neon);
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.ach-body {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
+/* ==========================================================================
+   CONTACT & INTERACTIVE MAPS SECTION
+   ========================================================================== */
+.contact-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.contact-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.contact-card-premium {
+    background: var(--secondary);
+    padding: 40px 30px;
+    border-radius: 24px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: var(--transition);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-card-link:hover .contact-card-premium {
+    border-color: var(--blue-neon);
+    transform: translateY(-8px);
+}
+
+.c-icon {
+    width: 64px;
+    height: 64px;
+    background: rgba(0, 229, 255, 0.08);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    margin-bottom: 24px;
+}
+
+.contact-card-premium h3 {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.c-val {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 20px;
+}
+
+.c-action {
+    font-size: 13px;
+    color: var(--blue-neon);
+    font-weight: 600;
+}
+
+.c-action-text {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.no-click {
+    cursor: default;
+}
+
+.map-container-box {
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    box-shadow: var(--shadow-premium);
+    height: 100%;
+    min-height: 300px;
+}
+
+/* ==========================================================================
+   PREMIUM GLASSMORPHISM TOOLKIT
+   ========================================================================== */
+.card-glass-mewah {
+    background: rgba(28, 37, 65, 0.45) !important;
+    backdrop-filter: blur(14px) saturate(180%);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25) !important;
+}
+
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Efek Hover Sinkron untuk Komponen Umum */
+.skill-card:hover, .stats-card:hover, .achievement-card:hover, .timeline-panel:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 15px 30px rgba(0, 229, 255, 0.15) !important;
+    border-color: var(--blue-neon) !important;
+}
+
+/* ==========================================================================
+   PREMIUM FOOTER
+   ========================================================================== */
+.premium-footer {
+    background: #060B1A;
+    padding: 60px 0 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--text-muted);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 45px;
+}
+
+.footer-about h3, .footer-links h4, .footer-socials h4 {
+    color: var(--blue-neon);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.footer-about p {
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links ul li {
+    margin-bottom: 12px;
+}
+
+.footer-links ul li a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.footer-links ul li a i {
+    font-size: 10px;
+    margin-right: 5px;
+    color: var(--blue-neon);
+    transition: transform 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+    color: var(--blue-neon);
+}
+
+.footer-links ul li a:hover i {
+    transform: translateX(4px);
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 16px;
+    transition: 0.3s ease;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    background: var(--blue-neon);
+    color: var(--primary);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 229, 255, 0.3);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.footer-bottom i {
+    color: #ef4444;
+    animation: heartBeat 1.5s infinite;
+}
+
+@keyframes heartBeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+/* ==========================================================================
+   BACK TO TOP & LOADER
+   ========================================================================== */
+#backToTop {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 50%;
+    background: rgba(28, 37, 65, 0.8);
+    color: var(--blue-neon);
+    cursor: pointer;
+    z-index: 99;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: var(--transition);
+}
+
+#backToTop:hover {
+    background: var(--blue-neon);
+    color: var(--primary);
+    transform: translateY(-5px);
+}
+
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.05);
+    border-top: 3px solid var(--blue-neon);
+    border-radius: 50%;
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 992px) {
+    .bg-text-3d {
+        font-size: 7rem;
+        letter-spacing: 8px;
+    }
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+    .navbar {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(11, 19, 43, 0.98);
+        backdrop-filter: blur(20px);
+        padding: 25px;
+        box-shadow: var(--shadow-premium);
+        border-bottom: 2px solid var(--blue-neon);
+        gap: 15px;
+        text-align: center;
+    }
+    .navbar.active {
+        display: flex;
+    }
+    .navbar a {
+        display: block;
+        padding: 10px 0;
+    }
+    .bg-text-3d {
+        font-size: 4.5rem;
+        letter-spacing: 6px;
+    }
+    .profile-card-3d-wrapper {
+        width: 220px;
+    }
+    .education-grid, .achievement-grid, .contact-layout-grid {
+        grid-template-columns: 1fr;
+    }
+    .linkedin-timeline::before {
+        left: 20px;
+    }
+    .timeline-item {
+        justify-content: flex-end !important;
+        margin-bottom: 30px;
+    }
+    .timeline-badge {
+        left: 20px;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        font-size: 14px;
+    }
+    .timeline-panel {
+        width: calc(100% - 50px);
+        padding: 20px;
+    }
+}
